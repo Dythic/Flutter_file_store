@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -6,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter FreeAds',
       theme: ThemeData(
         primaryColor: Colors.blue,
       ),
@@ -17,10 +19,23 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
+  Widget _gridList() {
+    return GridView.count(
+      crossAxisCount: 2,
+      children: List.generate(100, (index) {
+        return Container(
+          child: Card(
+            color: Colors.grey,
+          ),
+        );
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,16 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
         leading: Icon(Icons.menu),
         title: Text('Page title'),
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: List.generate(100, (index) {
-          return Container(
-            child: Card(
-              color: Colors.grey,
-            ),
-          );
-        }),
-      ),
+      body: _gridList(),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Increment Counter',
         child: const Icon(Icons.add),
@@ -45,8 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            title: Text("Info"),
+            icon: Icon(Icons.shopping_cart),
+            title: Text("Panier"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
@@ -55,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.share),
             title: Text("Share"),
-          )
+          ),
         ],
       ),
     );
