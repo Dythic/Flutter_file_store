@@ -46,6 +46,19 @@ class MyHomePageState extends State<MyHomePage> {
         leading: Icon(Icons.menu),
         title: Text('Page title'),
       ),
+      drawer: new Drawer(
+        child: ListView(
+          children: <Widget>[
+            new UserAccountsDrawerHeader(
+              accountName: new Text("Test"),
+              accountEmail: new Text("Test@test.fr"),
+              currentAccountPicture: new CircleAvatar(
+                backgroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
       body: _gridList(),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Increment Counter',
@@ -61,10 +74,6 @@ class MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: "Search",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.share),
-            label: "Share",
           ),
         ],
       ),
