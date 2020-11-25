@@ -1,8 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -47,20 +50,21 @@ class MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         tooltip: 'Increment Counter',
         child: const Icon(Icons.add),
+        onPressed: () {},
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
-            title: Text("Panier"),
+            label: "Panier",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            title: Text("Search"),
+            label: "Search",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.share),
-            title: Text("Share"),
+            label: "Share",
           ),
         ],
       ),
