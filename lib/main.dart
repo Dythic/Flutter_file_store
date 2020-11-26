@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'panier.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -26,6 +28,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  Widget _drawer() {
+    return new Drawer(
+      child: ListView(
+        children: <Widget>[
+          new UserAccountsDrawerHeader(
+            accountName: new Text("Test"),
+            accountEmail: new Text("Test@test.fr"),
+            currentAccountPicture: new CircleAvatar(
+              backgroundColor: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _gridList() {
     return GridView.count(
       crossAxisCount: 2,
@@ -39,24 +59,35 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Widget _bottomNavifationBar() {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: "Home",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.shopping_cart),
+          label: "Panier",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          label: "Search",
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: _drawer(),
       appBar: AppBar(
-        leading: Icon(Icons.menu),
-        title: Text('Page title'),
-      ),
-      drawer: new Drawer(
-        child: ListView(
-          children: <Widget>[
-            new UserAccountsDrawerHeader(
-              accountName: new Text("Test"),
-              accountEmail: new Text("Test@test.fr"),
-              currentAccountPicture: new CircleAvatar(
-                backgroundColor: Colors.white,
-              ),
-            ),
-          ],
+        title: Text("Main Page"),
+        leading: new IconButton(
+          icon: new Icon(Icons.menu),
+          onPressed: () => _scaffoldKey.currentState.openDrawer(),
         ),
       ),
       body: _gridList(),
@@ -65,18 +96,7 @@ class MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
         onPressed: () {},
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: "Panier",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "Search",
-          ),
-        ],
-      ),
+      bottomNavigationBar: _bottomNavifationBar(),
     );
   }
 }
