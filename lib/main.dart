@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'panier.dart';
+import 'accueil.dart';
+import 'acheter.dart';
+import 'vendre.dart';
+import 'profil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter FreeAds',
       theme: ThemeData(
-        primaryColor: Colors.blue,
+        brightness: Brightness.dark,
+        primaryColor: Colors.black,
       ),
       home: MyHomePage(),
     );
@@ -28,51 +32,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    AccueilPage(),
+    AcheterPage(),
+    VendrePage(),
+    ProfilPage()
+  ];
 
-  Widget _drawer() {
-    return new Drawer(
-      child: ListView(
-        children: <Widget>[
-          new UserAccountsDrawerHeader(
-            accountName: new Text("Test"),
-            accountEmail: new Text("Test@test.fr"),
-            currentAccountPicture: new CircleAvatar(
-              backgroundColor: Colors.white,
-            ),
-          ),
-        ],
-      ),
-    );
+  void onTappedBar(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
-  Widget _gridList() {
-    return GridView.count(
-      crossAxisCount: 2,
-      children: List.generate(100, (index) {
-        return Container(
-          child: Card(
-            color: Colors.grey,
-          ),
-        );
-      }),
-    );
-  }
-
-  Widget _bottomNavifationBar() {
+  Widget _bottomNavigationBar() {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
+      onTap: onTappedBar,
+      currentIndex: _currentIndex,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white,
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Home",
+          icon: new Icon(Icons.home_outlined),
+          title: new Text("Accueil"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
-          label: "Panier",
+          icon: new Icon(Icons.add_shopping_cart_outlined),
+          title: new Text("Acheter"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: "Search",
+          icon: new Icon(Icons.local_offer_outlined),
+          title: new Text("Vendre"),
+        ),
+        BottomNavigationBarItem(
+          icon: new Icon(Icons.perm_identity_outlined),
+          title: new Text("Profil"),
         ),
       ],
     );
@@ -81,22 +76,22 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      drawer: _drawer(),
       appBar: AppBar(
-        title: Text("Main Page"),
-        leading: new IconButton(
-          icon: new Icon(Icons.menu),
-          onPressed: () => _scaffoldKey.currentState.openDrawer(),
-        ),
+        title: Text("FreeAds"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.shopping_cart,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // do something
+            },
+          )
+        ],
       ),
-      body: _gridList(),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Increment Counter',
-        child: const Icon(Icons.add),
-        onPressed: () {},
-      ),
-      bottomNavigationBar: _bottomNavifationBar(),
+      body: _children[_currentIndex],
+      bottomNavigationBar: _bottomNavigationBar(),
     );
   }
 }
