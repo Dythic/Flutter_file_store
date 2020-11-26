@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_file_store/panier.dart';
 
 import 'accueil.dart';
 import 'acheter.dart';
 import 'vendre.dart';
 import 'profil.dart';
+import 'panier.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -85,7 +87,8 @@ class MyHomePageState extends State<MyHomePage> {
               color: Colors.white,
             ),
             onPressed: () {
-              // do something
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PanierPage()));
             },
           )
         ],

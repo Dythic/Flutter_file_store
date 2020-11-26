@@ -5,11 +5,13 @@ class ProfilPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
-          height: 200,
-          width: 100,
-          color: Colors.green,
-        ),
+        child: ButtonBar(
+  children: <Widget>[
+    FlatButton(
+      child: Text('Ok'),
+      color: Colors.blue,
+      onPressed: () {/** */},
+    ),
       ),
     );
   }
