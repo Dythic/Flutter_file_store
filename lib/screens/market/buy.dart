@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AcheterPage extends StatelessWidget {
+class BuyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

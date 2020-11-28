@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'login.dart';
-import 'register.dart';
+import 'package:flutter_file_store/constants/routes_constant.dart';
 
-class ProfilPage extends StatelessWidget {
+
+class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -17,29 +17,23 @@ class ProfilPage extends StatelessWidget {
           children: <Widget>[
             new RaisedButton(
               color: Colors.black,
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
-              },
+              onPressed: () => Navigator.pushNamed(context, RoutesConstant.loginRoute),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               child: new Text(
-                'Se connecter',
+                'Login',
                 style: TextStyle(fontSize: 20),
               ),
             ),
             new RaisedButton(
               color: Colors.white,
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RegisterPage()));
-              },
+              onPressed: () => Navigator.pushNamed(context, RoutesConstant.registerRoute),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               child: new Text(
-                "S'inscire",
+                "Register",
                 style: TextStyle(fontSize: 20),
               ),
             ),

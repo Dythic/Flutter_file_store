@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PanierPage extends StatelessWidget {
+class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
