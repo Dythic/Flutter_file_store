@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_file_store/routes.dart';
-
 import 'package:flutter_file_store/constants/routes_constant.dart';
-
 
 void main() => runApp(MyApp());
 
