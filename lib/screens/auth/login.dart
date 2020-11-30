@@ -8,19 +8,19 @@ class LoginPage extends StatelessWidget {
         title: Text("Login"),
         actions: <Widget>[],
       ),
-      body: MyStatefulWidget(),
+      body: LoginForm(),
     );
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  MyStatefulWidget({Key key}) : super(key: key);
+class LoginForm extends StatefulWidget {
+  LoginForm({Key key}) : super(key: key);
 
   @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+  _LoginFormState createState() => _LoginFormState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -108,8 +108,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
                       onPressed: () {
-                        // Validate will return true if the form is valid, or false if
-                        // the form is invalid.
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
                         }
