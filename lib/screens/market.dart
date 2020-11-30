@@ -7,7 +7,6 @@ import 'package:flutter_file_store/screens/profile/profile.dart';
 
 import 'package:flutter_file_store/constants/routes_constant.dart';
 
-
 class Market extends StatefulWidget {
   @override
   MarketState createState() => MarketState();
@@ -40,8 +39,8 @@ class MarketState extends State<Market> {
           label: "Home",
         ),
         BottomNavigationBarItem(
-          icon: new Icon(Icons.add_shopping_cart_outlined),
-          label: "Buy",
+          icon: new Icon(Icons.search_outlined),
+          label: "Browse",
         ),
         BottomNavigationBarItem(
           icon: new Icon(Icons.local_offer_outlined),
@@ -66,7 +65,8 @@ class MarketState extends State<Market> {
               Icons.shopping_cart,
               color: Colors.white,
             ),
-            onPressed: () => Navigator.pushNamed(context, RoutesConstant.cartRoute),
+            onPressed: () =>
+                Navigator.pushNamed(context, RoutesConstant.cartRoute),
           )
         ],
       ),

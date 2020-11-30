@@ -1,25 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_file_store/constants/Product.dart';
+
+import 'buy/item_card.dart';
 
 class BuyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: List.generate(100, (index) {
-          return Container(
-            child: Card(
-              color: Colors.blue,
-              child: InkWell(
-                splashColor: Colors.white,
-                onTap: () async {
-                  print(index);
-                },
-              ),
-            ),
-          );
-        }),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            "Product",
+            style: Theme.of(context)
+                .textTheme
+                .headline5
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: GridView.builder(
+                itemCount: products.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20.0,
+                  crossAxisSpacing: 20.0,
+                  childAspectRatio: 0.75,
+                ),
+                itemBuilder: (context, index) =>
+                    ItemCard(product: products[index], press: () {}),
+              )),
+        ),
+      ],
     );
   }
 }

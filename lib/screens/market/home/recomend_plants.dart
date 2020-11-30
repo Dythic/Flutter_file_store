@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../home.dart';
-
 class RecomendsPlants extends StatelessWidget {
   const RecomendsPlants({
     Key key,
@@ -14,24 +12,24 @@ class RecomendsPlants extends StatelessWidget {
       child: Row(
         children: <Widget>[
           RecomendPlantCard(
-            image: "assets/images/image_1.png",
-            title: "One Plus",
+            image: "assets/images/iphone.jpg",
+            title: "Iphone",
             country: "France",
-            price: 440,
+            price: 850,
             press: () {},
           ),
           RecomendPlantCard(
-            image: "assets/images/image_2.png",
-            title: "Angelica",
-            country: "Russia",
-            price: 440,
+            image: "assets/images/watch.jpg",
+            title: "Apple Watch",
+            country: "China",
+            price: 140,
             press: () {},
           ),
           RecomendPlantCard(
-            image: "assets/images/image_3.png",
-            title: "Samantha",
+            image: "assets/images/enceinte.jpg",
+            title: "Enceinte",
             country: "Russia",
-            price: 440,
+            price: 350,
             press: () {},
           )
         ],
