@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 import 'package:flutter_file_store/helpers/database_helper.dart';
 import 'package:flutter_file_store/helpers/shared_preference_helper.dart';
@@ -20,6 +21,30 @@ class UserProvider extends ChangeNotifier {
   Future<String> get email => _sharedPreferenceHelper.getString(UserConstant.columnEmail);
   Future<String> get imageProfile => _sharedPreferenceHelper.getString(UserConstant.columnImageProfile);
   Future<String> get username => _sharedPreferenceHelper.getString(UserConstant.columnUsername);
+
+  Future<bool> setUsername(String username) async {
+    bool res = await _updateUser({UserConstant.columnUsername: username});
+    if (res == false) return res;
+    res = await _sharedPreferenceHelper.setString(UserConstant.columnUsername, username);
+
+    notifyListeners();
+    return res;
+  }
+
+  Future<bool> setImageProfile(String path) async {
+    bool res = await _updateUser({UserConstant.columnImageProfile: path});
+    if (res == false) return res;
+    res = await _sharedPreferenceHelper.setString(UserConstant.columnImageProfile, path);
+
+    notifyListeners();
+    return res;
+  }
+
+  bool fileIsOk(String path) {
+    if (path == null)
+      return false;
+    return File(path).existsSync();
+  }
 
   Future<String> _hashPassword(String password) async {
     String salt = await FlutterBcrypt.salt();
@@ -55,12 +80,13 @@ class UserProvider extends ChangeNotifier {
     .then((data) => data != null ? UserModel.fromMap(data) : null);
   }
 
-  void updateUser(UserModel user, String username) {
-    user.username = username;
-    dbHelper.update(UserConstant.tableUsers, {UserConstant.columnUsername: user.username}, "${UserConstant.columnEmail} = ?", [user.email]).then((id) {
+  Future<bool> _updateUser(Map<String, dynamic> data) async {
+    final email = await this.email;
+
+    return dbHelper.update(UserConstant.tableUsers, data, "${UserConstant.columnEmail} = ?", [email]).then((id) {
       print("Update ID: $id");
+      return id != -1 ? true : false;
     });
-    notifyListeners();
   }
 
   Future<bool> login(String email, String password) async {
