@@ -8,19 +8,19 @@ class RegisterPage extends StatelessWidget {
         title: Text("Register"),
         actions: <Widget>[],
       ),
-      body: LoginForm(),
+      body: RegisterForm(),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
-  LoginForm({Key key}) : super(key: key);
+class RegisterForm extends StatefulWidget {
+  RegisterForm({Key key}) : super(key: key);
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _RegisterFormState createState() => _RegisterFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
 
   @override
