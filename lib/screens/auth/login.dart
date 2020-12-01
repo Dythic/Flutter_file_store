@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_file_store/providers/user_provider.dart';
+import 'package:provider/provider.dart';
+
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -107,9 +110,14 @@ class _LoginFormState extends State<LoginForm> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
+                          final userProvider = Provider.of<UserProvider>(context, listen: false);
+                          final res = await userProvider.login(email, password);
+                          print("login: $res");
+                          if (res == true)
+                            Navigator.pop(context);
                         }
                       },
                       child: Text(
