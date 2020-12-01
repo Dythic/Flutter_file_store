@@ -4,6 +4,8 @@ import 'package:flutter_file_store/constants/routes_constant.dart';
 
 import 'package:flutter_file_store/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
+import 'package:flutter_file_store/providers/picker_provider.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -80,11 +82,50 @@ class _ProfileModifierState extends State<ProfileModifier> {
   Widget build(BuildContext context) {
     String username;
     String email;
+    String _image;
+
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                PickerProvider().getImagePathFromGallery().then((result) {
+                  setState(() {
+                    if (result is String) _image = result.toString();
+                  });
+                  debugPrint('imagePath: $_image');
+                });
+              },
+              child: CircleAvatar(
+                radius: 55,
+                backgroundColor: Color(0xffFDCF09),
+                child: _image != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.file(
+                          File(_image),
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(50)),
+                        width: 100,
+                        height: 100,
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+              ),
+            ),
+          ),
           Container(
             margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 50.0),
             child: Text(
