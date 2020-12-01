@@ -30,7 +30,6 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget build(BuildContext context) {
     String email;
     String password;
-    String passwordRepeat;
     String name;
     return Form(
       key: _formKey,
@@ -133,9 +132,6 @@ class _RegisterFormState extends State<RegisterForm> {
               children: <Widget>[
                 Expanded(
                   child: TextFormField(
-                    onSaved: (String value) {
-                      passwordRepeat = value;
-                    },
                     obscureText: true,
                     validator: (value) {
                       if (value != password) {
@@ -172,11 +168,12 @@ class _RegisterFormState extends State<RegisterForm> {
                       onPressed: () async {
                         _formKey.currentState.save();
                         if (_formKey.currentState.validate()) {
-                          final userProvider = Provider.of<UserProvider>(context, listen: false);
-                          final res = await userProvider.register(email, password, name);
+                          final userProvider =
+                              Provider.of<UserProvider>(context, listen: false);
+                          final res = await userProvider.register(
+                              email, password, name);
                           print("register: $res");
-                          if (res == true)
-                            Navigator.pop(context);
+                          if (res == true) Navigator.pop(context);
                         }
                       },
                       child: Text(
