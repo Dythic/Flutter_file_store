@@ -4,6 +4,7 @@ import 'home/header_with_seachbox.dart';
 import 'home/featurred_plants.dart';
 import 'home/title_with_more_bbtn.dart';
 import 'home/recomend_plants.dart';
+import 'home/banner.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -13,10 +14,11 @@ class HomePage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           HeaderWithSearchBox(size: size),
-          TitleWithMoreBtn(title: "Recomended", press: () {}),
-          RecomendsPlants(),
+          BannerCard(),
           TitleWithMoreBtn(title: "Featured Product", press: () {}),
           FeaturePlants(),
+          TitleWithMoreBtn(title: "Recomended", press: () {}),
+          RecomendsPlants(),
           SizedBox(height: 20.0),
         ],
       ),

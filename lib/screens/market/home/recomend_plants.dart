@@ -12,24 +12,24 @@ class RecomendsPlants extends StatelessWidget {
       child: Row(
         children: <Widget>[
           RecomendPlantCard(
-            image: "assets/images/iphone.jpg",
-            title: "Iphone",
+            image: "assets/images/wireless headset.png",
+            title: "Headset",
             country: "France",
-            price: 850,
+            price: 150,
             press: () {},
           ),
           RecomendPlantCard(
-            image: "assets/images/watch.jpg",
-            title: "Apple Watch",
+            image: "assets/images/shoes2.png",
+            title: "Shoes",
             country: "China",
-            price: 140,
+            price: 90,
             press: () {},
           ),
           RecomendPlantCard(
-            image: "assets/images/enceinte.jpg",
-            title: "Enceinte",
+            image: "assets/images/Image Popular Product 3.png",
+            title: "Helmet",
             country: "Russia",
-            price: 350,
+            price: 25,
             press: () {},
           )
         ],
