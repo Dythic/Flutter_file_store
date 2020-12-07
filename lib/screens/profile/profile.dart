@@ -1,67 +1,68 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 import 'package:flutter_file_store/constants/routes_constant.dart';
 
+import 'package:flutter_file_store/providers/picker_provider.dart';
 import 'package:flutter_file_store/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'dart:io';
-import 'package:flutter_file_store/providers/picker_provider.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        body: FutureBuilder(
-      future: context.watch<UserProvider>().username,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting)
-          return Center(child: CircularProgressIndicator());
-        else if (snapshot.hasData) {
-          if (snapshot.data != "") {
-            return new ProfileModifier(snapshot: snapshot);
-          } else {
-            return new Center(
-              child: new ButtonBar(
-                mainAxisSize: MainAxisSize.max,
-                alignment: MainAxisAlignment.center,
-                buttonMinWidth: 320.0,
-                buttonHeight: 50.0,
-                overflowButtonSpacing: 10,
-                children: <Widget>[
-                  new RaisedButton(
-                    color: Colors.black,
-                    onPressed: () =>
-                        Navigator.pushNamed(context, RoutesConstant.loginRoute),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      body: FutureBuilder(
+        future: context.watch<UserProvider>().isLogged(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Center(child: CircularProgressIndicator());
+          else if (snapshot.hasData) {
+            if (snapshot.data != false) {
+              return new ProfileModifier(snapshot: snapshot);
+            } else {
+              return new Center(
+                child: new ButtonBar(
+                  mainAxisSize: MainAxisSize.max,
+                  alignment: MainAxisAlignment.center,
+                  buttonMinWidth: 320.0,
+                  buttonHeight: 50.0,
+                  overflowButtonSpacing: 10,
+                  children: <Widget>[
+                    new RaisedButton(
+                      color: Colors.black,
+                      onPressed: () =>
+                          Navigator.pushNamed(context, RoutesConstant.loginRoute),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      child: new Text(
+                        'Login',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                    child: new Text(
-                      'Login',
-                      style: TextStyle(fontSize: 20),
+                    new RaisedButton(
+                      color: Colors.white,
+                      onPressed: () => Navigator.pushNamed(
+                          context, RoutesConstant.registerRoute),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      child: new Text(
+                        "Register",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                  ),
-                  new RaisedButton(
-                    color: Colors.white,
-                    onPressed: () => Navigator.pushNamed(
-                        context, RoutesConstant.registerRoute),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    child: new Text(
-                      "Register",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }
-        } else if (snapshot.hasError)
-          return Text("ERROR: ${snapshot.error}");
-        else
-          return Text('');
-      },
-    ));
+                  ],
+                ),
+              );
+            }
+          } else if (snapshot.hasError)
+            return Text("ERROR: ${snapshot.error}");
+          else
+            return Text('');
+        },
+      )
+    );
   }
 }
 
@@ -82,7 +83,7 @@ class _ProfileModifierState extends State<ProfileModifier> {
   Widget build(BuildContext context) {
     String username;
     String email;
-    String _image;
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Form(
       key: _formKey,
@@ -93,20 +94,20 @@ class _ProfileModifierState extends State<ProfileModifier> {
             child: GestureDetector(
               onTap: () {
                 PickerProvider().getImagePathFromGallery().then((result) {
-                  setState(() {
-                    if (result is String) _image = result.toString();
-                  });
-                  debugPrint('imagePath: $_image');
+                  if (result != null) {
+                    final res = userProvider.setImageProfile(result);
+                    print('imagePath: $res');
+                  }
                 });
               },
               child: CircleAvatar(
                 radius: 55,
                 backgroundColor: Color(0xffFDCF09),
-                child: _image != null
+                child: userProvider.user.imageProfile != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(50),
                         child: Image.file(
-                          File(_image),
+                          File(userProvider.user.imageProfile),
                           width: 100,
                           height: 100,
                           fit: BoxFit.fitHeight,
@@ -129,7 +130,7 @@ class _ProfileModifierState extends State<ProfileModifier> {
           Container(
             margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 50.0),
             child: Text(
-              "Hello ${snapshot.data}!",
+              "Hello ${userProvider.user.username}!",
               style: TextStyle(fontSize: 30),
             ),
           ),
@@ -142,9 +143,9 @@ class _ProfileModifierState extends State<ProfileModifier> {
               children: <Widget>[
                 Expanded(
                   child: TextFormField(
-                    initialValue: snapshot.data,
+                    initialValue: userProvider.user.username,
                     onSaved: (String value) {
-                      email = value;
+                      username = value;
                     },
                     validator: (value) {
                       if (value.isEmpty) {
@@ -171,6 +172,7 @@ class _ProfileModifierState extends State<ProfileModifier> {
               children: <Widget>[
                 Expanded(
                   child: TextFormField(
+                    initialValue: userProvider.user.email,
                     onSaved: (String value) {
                       email = value;
                     },
@@ -211,11 +213,8 @@ class _ProfileModifierState extends State<ProfileModifier> {
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
-                          // final userProvider =
-                          //     Provider.of<UserProvider>(context, listen: false);
-                          // final res = await userProvider.login(email, password);
-                          // print("login: $res");
-                          // if (res == true) Navigator.pop(context);
+                          final res = await userProvider.setUser(email, username);
+                          print("set user: $res");
                         }
                       },
                       child: Text(
