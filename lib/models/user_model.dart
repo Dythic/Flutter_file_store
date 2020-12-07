@@ -18,6 +18,7 @@ class UserModel {
   UserModel.empty();
 
   UserModel.fromMap(Map<String, dynamic> map) {
+    id = map[UserConstant.columnId];
     email = map[UserConstant.columnEmail];
     password = map[UserConstant.columnPassword];
     username = map[UserConstant.columnUsername];
