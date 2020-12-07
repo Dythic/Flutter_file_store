@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'package:flutter_file_store/constants/product_constant.dart';
 import 'package:flutter_file_store/constants/user_constant.dart';
 
 class DatabaseHelper {
@@ -25,7 +26,8 @@ class DatabaseHelper {
 
     return await openDatabase(path,
         version: _databaseVersion,
-        onCreate: _onCreate);
+        onCreate: _onCreate
+      );
   }
 
   Future _onCreate(Database db, int version) async {
@@ -36,6 +38,18 @@ class DatabaseHelper {
         ${UserConstant.columnPassword} TEXT NOT NULL,
         ${UserConstant.columnUsername} TEXT NOT NULL,
         ${UserConstant.columnImageProfile} TEXT
+      )
+      ''');
+    await db.execute('''
+      CREATE TABLE ${ProductConstant.tableProducts} (
+        ${ProductConstant.columnId} INTEGER PRIMARY KEY AUTOINCREMENT,
+        ${ProductConstant.columnName} TEXT NOT NULL,
+        ${ProductConstant.columnPrice} TEXT NOT NULL,
+        ${ProductConstant.columnDescription} TEXT,
+        ${ProductConstant.columnPhoto} TEXT,
+        ${ProductConstant.columnTags} TEXT,
+        ${ProductConstant.columnSeller} INTEGER NOT NULL,
+        FOREIGN KEY (${ProductConstant.columnSeller}) REFERENCES ${UserConstant.tableUsers} (${UserConstant.columnId}) ON DELETE NO ACTION ON UPDATE NO ACTION
       )
       ''');
   }
@@ -62,6 +76,19 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> queryAll(String table, List<String> columns) async {
     Database db = await database;
     List<Map<String, dynamic>> maps = await db.query(table, columns: columns);
+    if (maps.length > 0) {
+      return maps;
+    }
+    return null;
+  }
+
+  Future<List<Map<String, dynamic>>> queryAllBy(String table, List<String> columns, String where, List<String> whereArgs) async {
+    Database db = await database;
+    List<Map<String, dynamic>> maps = await db.query(table,
+      columns: columns,
+      where: where,
+      whereArgs: whereArgs
+    );
     if (maps.length > 0) {
       return maps;
     }

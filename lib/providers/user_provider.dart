@@ -13,28 +13,45 @@ class UserProvider extends ChangeNotifier {
   final DatabaseHelper dbHelper = DatabaseHelper.instance;
 
   SharedPreferenceHelper _sharedPreferenceHelper;
+  UserModel _user;
 
   UserProvider() {
     _sharedPreferenceHelper = SharedPreferenceHelper();
   }
 
-  Future<String> get email => _sharedPreferenceHelper.getString(UserConstant.columnEmail);
-  Future<String> get imageProfile => _sharedPreferenceHelper.getString(UserConstant.columnImageProfile);
+  Future<int> get id => _sharedPreferenceHelper.getInt(UserConstant.columnId);
+  // Future<String> get email => _sharedPreferenceHelper.getString(UserConstant.columnEmail);
+  // Future<String> get imageProfile => _sharedPreferenceHelper.getString(UserConstant.columnImageProfile);
   Future<String> get username => _sharedPreferenceHelper.getString(UserConstant.columnUsername);
+  UserModel get user => _user;
 
-  Future<bool> setUsername(String username) async {
-    bool res = await _updateUser({UserConstant.columnUsername: username});
-    if (res == false) return res;
-    res = await _sharedPreferenceHelper.setString(UserConstant.columnUsername, username);
+  Future<bool> setUser(String email, String username) async {
+    if (email != null || username != null) {
+      bool res;
 
-    notifyListeners();
-    return res;
+      if (email != null && username != null)
+        res = await _updateCurrentUser({UserConstant.columnEmail: email, UserConstant.columnUsername: username});
+      else if (email == null)
+        res = await _updateCurrentUser({UserConstant.columnUsername: username});
+      else
+        res = await _updateCurrentUser({UserConstant.columnEmail: email});
+
+      if (res == false) return res;
+      // res = await _sharedPreferenceHelper.setString(UserConstant.columnUsername, username);
+      _user.email = email;
+      _user.username = username;
+
+      notifyListeners();
+      return res;
+    } else
+      return true;
   }
 
   Future<bool> setImageProfile(String path) async {
-    bool res = await _updateUser({UserConstant.columnImageProfile: path});
+    final res = await _updateCurrentUser({UserConstant.columnImageProfile: path});
     if (res == false) return res;
-    res = await _sharedPreferenceHelper.setString(UserConstant.columnImageProfile, path);
+    // res = await _sharedPreferenceHelper.setString(UserConstant.columnImageProfile, path);
+    _user.imageProfile = path;
 
     notifyListeners();
     return res;
@@ -70,8 +87,9 @@ class UserProvider extends ChangeNotifier {
     return dbHelper.insert(UserConstant.tableUsers, user.toMap()).then((id) => id != -1 ? true : false);
   }
 
-  Future<UserModel> _getUser(String email) {
+  Future<UserModel> _getUserByEmail(String email) {
     return dbHelper.queryBy(UserConstant.tableUsers, [
+        UserConstant.columnId,
         UserConstant.columnEmail,
         UserConstant.columnPassword,
         UserConstant.columnUsername,
@@ -80,24 +98,34 @@ class UserProvider extends ChangeNotifier {
     .then((data) => data != null ? UserModel.fromMap(data) : null);
   }
 
-  Future<bool> _updateUser(Map<String, dynamic> data) async {
-    final email = await this.email;
+  Future<UserModel> _getUserById(int id) {
+    return dbHelper.queryBy(UserConstant.tableUsers, [
+        UserConstant.columnId,
+        UserConstant.columnEmail,
+        UserConstant.columnPassword,
+        UserConstant.columnUsername,
+        UserConstant.columnImageProfile
+      ], "${UserConstant.columnId} = ?", [id.toString()])
+    .then((data) => data != null ? UserModel.fromMap(data) : null);
+  }
 
-    return dbHelper.update(UserConstant.tableUsers, data, "${UserConstant.columnEmail} = ?", [email]).then((id) {
+  Future<bool> _updateCurrentUser(Map<String, dynamic> data) async {
+    return dbHelper.update(UserConstant.tableUsers, data, "${UserConstant.columnId} = ?", [_user.id.toString()]).then((id) {
       print("Update ID: $id");
       return id != -1 ? true : false;
     });
   }
 
   Future<bool> login(String email, String password) async {
-    UserModel user = await _getUser(email);
+    UserModel user = await _getUserByEmail(email);
 
     if (user == null || user.email == null || user.password == null)
       return false;
     if (user.email == email && true == await _verifyPassword(password, user.password)) {
-      _sharedPreferenceHelper.setString(UserConstant.columnEmail, user.email);
-      _sharedPreferenceHelper.setString(UserConstant.columnUsername, user.username);
-      _sharedPreferenceHelper.setString(UserConstant.columnImageProfile, user.imageProfile);
+      _sharedPreferenceHelper.setInt(UserConstant.columnId, user.id);
+      // _sharedPreferenceHelper.setString(UserConstant.columnEmail, user.email);
+      // _sharedPreferenceHelper.setString(UserConstant.columnUsername, user.username);
+      // _sharedPreferenceHelper.setString(UserConstant.columnImageProfile, user.imageProfile);
 
       notifyListeners();
       return true;
@@ -114,9 +142,18 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<bool> logout() async {
-    bool value = await _sharedPreferenceHelper.clear();
+    final value = await _sharedPreferenceHelper.clear();
+    _user = null;
 
     notifyListeners();
     return value;
+  }
+
+  Future<bool> isLogged() async {
+    if (_user != null) return true;
+    final id = await this.id;
+    if (id == -1) return false;
+    _user = await _getUserById(id);
+    return true;
   }
 }

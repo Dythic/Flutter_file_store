@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:image_picker/image_picker.dart';
 
-
-class PickerProvider extends ChangeNotifier {
+class PickerProvider {
   final picker = ImagePicker();
 
   Future<String> getImagePathFromCamera() async {

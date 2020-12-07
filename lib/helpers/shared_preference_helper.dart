@@ -19,6 +19,18 @@ class SharedPreferenceHelper {
     });
   }
 
+  Future<int> getInt(String title) {
+    return _sharedPreference.then((prefs) {
+      return prefs.getInt(title) ?? -1;
+    });
+  }
+
+  Future<bool> setInt(String title, int value) {
+    return _sharedPreference.then((prefs) {
+      return prefs.setInt(title, value);
+    });
+  }
+
   Future<bool> clear() {
     return _sharedPreference.then((prefs) => prefs.clear());
   }
