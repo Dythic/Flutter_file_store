@@ -11,58 +11,57 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: FutureBuilder(
-        future: context.watch<UserProvider>().isLogged(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting)
-            return Center(child: CircularProgressIndicator());
-          else if (snapshot.hasData) {
-            if (snapshot.data != false) {
-              return new ProfileModifier(snapshot: snapshot);
-            } else {
-              return new Center(
-                child: new ButtonBar(
-                  mainAxisSize: MainAxisSize.max,
-                  alignment: MainAxisAlignment.center,
-                  buttonMinWidth: 320.0,
-                  buttonHeight: 50.0,
-                  overflowButtonSpacing: 10,
-                  children: <Widget>[
-                    new RaisedButton(
-                      color: Colors.black,
-                      onPressed: () =>
-                          Navigator.pushNamed(context, RoutesConstant.loginRoute),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      child: new Text(
-                        'Login',
-                        style: TextStyle(fontSize: 20),
-                      ),
+        body: FutureBuilder(
+      future: context.watch<UserProvider>().isLogged(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting)
+          return Center(child: CircularProgressIndicator());
+        else if (snapshot.hasData) {
+          if (snapshot.data != false) {
+            return new ProfileModifier(snapshot: snapshot);
+          } else {
+            return new Center(
+              child: new ButtonBar(
+                mainAxisSize: MainAxisSize.max,
+                alignment: MainAxisAlignment.center,
+                buttonMinWidth: 320.0,
+                buttonHeight: 50.0,
+                overflowButtonSpacing: 10,
+                children: <Widget>[
+                  new RaisedButton(
+                    color: Colors.black,
+                    onPressed: () =>
+                        Navigator.pushNamed(context, RoutesConstant.loginRoute),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    new RaisedButton(
-                      color: Colors.white,
-                      onPressed: () => Navigator.pushNamed(
-                          context, RoutesConstant.registerRoute),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      child: new Text(
-                        "Register",
-                        style: TextStyle(fontSize: 20),
-                      ),
+                    child: new Text(
+                      'Login',
+                      style: TextStyle(fontSize: 20),
                     ),
-                  ],
-                ),
-              );
-            }
-          } else if (snapshot.hasError)
-            return Text("ERROR: ${snapshot.error}");
-          else
-            return Text('');
-        },
-      )
-    );
+                  ),
+                  new RaisedButton(
+                    color: Colors.white,
+                    onPressed: () => Navigator.pushNamed(
+                        context, RoutesConstant.registerRoute),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    child: new Text(
+                      "Register",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        } else if (snapshot.hasError)
+          return Text("ERROR: ${snapshot.error}");
+        else
+          return Text('');
+      },
+    ));
   }
 }
 
@@ -90,7 +89,8 @@ class _ProfileModifierState extends State<ProfileModifier> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Center(
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 40),
             child: GestureDetector(
               onTap: () {
                 PickerProvider().getImagePathFromGallery().then((result) {
@@ -101,8 +101,8 @@ class _ProfileModifierState extends State<ProfileModifier> {
                 });
               },
               child: CircleAvatar(
-                radius: 55,
-                backgroundColor: Color(0xffFDCF09),
+                radius: 53,
+                backgroundColor: Colors.white,
                 child: userProvider.user.imageProfile != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(50),
@@ -128,7 +128,6 @@ class _ProfileModifierState extends State<ProfileModifier> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 50.0),
             child: Text(
               "Hello ${userProvider.user.username}!",
               style: TextStyle(fontSize: 30),
@@ -213,7 +212,8 @@ class _ProfileModifierState extends State<ProfileModifier> {
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
-                          final res = await userProvider.setUser(email, username);
+                          final res =
+                              await userProvider.setUser(email, username);
                           print("set user: $res");
                         }
                       },
