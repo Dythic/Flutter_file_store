@@ -1,14 +1,6 @@
 import 'package:image_picker/image_picker.dart';
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-class PickerProvider extends ChangeNotifier {
-=======
 class PickerProvider {
->>>>>>> add product provider + modify user provider
-=======
-class PickerProvider {
->>>>>>> ba6c3d4ff03eed43773dcad4e667457ffb16fb3c
   final picker = ImagePicker();
 
   Future<String> getImagePathFromCamera() async {
