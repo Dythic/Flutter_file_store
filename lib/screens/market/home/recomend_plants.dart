@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../detail/detail.dart';
 
 class RecomendsPlants extends StatelessWidget {
   const RecomendsPlants({
@@ -16,21 +17,57 @@ class RecomendsPlants extends StatelessWidget {
             title: "Headset",
             country: "France",
             price: 150,
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Detailscreen(
+                    image: "assets/images/wireless headset.png",
+                    title: "Headset",
+                    country: "France",
+                    price: 150,
+                  ),
+                ),
+              );
+            },
           ),
           RecomendPlantCard(
             image: "assets/images/shoes2.png",
             title: "Shoes",
             country: "China",
             price: 90,
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Detailscreen(
+                    image: "assets/images/shoes2.png",
+                    title: "Shoes",
+                    country: "China",
+                    price: 90,
+                  ),
+                ),
+              );
+            },
           ),
           RecomendPlantCard(
             image: "assets/images/Image Popular Product 3.png",
             title: "Helmet",
             country: "Russia",
             price: 25,
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Detailscreen(
+                    image: "assets/images/Image Popular Product 3.png",
+                    title: "Helmet",
+                    country: "Russia",
+                    price: 25,
+                  ),
+                ),
+              );
+            },
           )
         ],
       ),
