@@ -30,6 +30,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     String email;
     String password;
+    String error = "";
     return Form(
       key: _formKey,
       child: Column(
@@ -52,6 +53,9 @@ class _LoginFormState extends State<LoginForm> {
                           !value.contains("@") ||
                           !value.contains(".")) {
                         return 'Invalid email';
+                      }
+                      if (error.isNotEmpty) {
+                        return (error);
                       }
                       return null;
                     },
@@ -82,6 +86,9 @@ class _LoginFormState extends State<LoginForm> {
                       if (value.isEmpty || value.length < 8) {
                         return 'Password length must be at least 8';
                       }
+                      if (error.isNotEmpty) {
+                        return (error);
+                      }
                       return null;
                     },
                     decoration: InputDecoration(
@@ -111,13 +118,19 @@ class _LoginFormState extends State<LoginForm> {
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
                       onPressed: () async {
+                        error = "";
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
                           final userProvider =
                               Provider.of<UserProvider>(context, listen: false);
                           final res = await userProvider.login(email, password);
                           print("login: $res");
-                          if (res == true) Navigator.pop(context);
+                          if (res == true)
+                            Navigator.pop(context);
+                          else {
+                            error = "Invalid email or password";
+                            _formKey.currentState.validate();
+                          }
                         }
                       },
                       child: Text(
