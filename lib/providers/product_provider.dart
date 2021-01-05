@@ -16,14 +16,14 @@ class ProductProvider extends ChangeNotifier {
     _sharedPreferenceHelper = SharedPreferenceHelper();
   }
 
-  Future<bool> createProduct(String name, String price, String description, String photo, String tags) async {
+  Future<bool> createProduct(String name, String price, String description, String photo, List<String> tags) async {
     int sellerId = await _sharedPreferenceHelper.getInt(UserConstant.columnId);
 
     ProductModel product = ProductModel(
       name: name,
       price: price,
       description: description,
-      photo: null,
+      photo: photo,
       tags: tags,
       sellerId: sellerId,
     );
@@ -40,6 +40,26 @@ class ProductProvider extends ChangeNotifier {
         ProductConstant.columnSeller
       ], "${ProductConstant.columnId} = ?", [id.toString()])
     .then((data) => data != null ? ProductModel.fromMap(data) : null);
+  }
+
+  Future<List<ProductModel>> getAllProductsByTag(String tag) {
+    return dbHelper.queryAllBy(ProductConstant.tableProducts, [
+        ProductConstant.columnName,
+        ProductConstant.columnPrice,
+        ProductConstant.columnDescription,
+        ProductConstant.columnPhoto,
+        ProductConstant.columnTags,
+        ProductConstant.columnSeller
+      ], "${ProductConstant.columnTags} LIKE ?", ["%$tag%"])
+    .then((data) {
+      List<ProductModel> products = [];
+      if (data != null) {
+        data.forEach((element) {
+          products.add(ProductModel.fromMap(element));
+        });
+      }
+      return products;
+    });
   }
 
   Future<List<ProductModel>> getAllProductsByTags(List<String> tags) {

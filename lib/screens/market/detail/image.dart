@@ -14,46 +14,43 @@ class ImageAndIcons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0 * 3),
-      child: SizedBox(
-        height: size.height * 0.8,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0 * 3),
-                child: Column(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: IconButton(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            margin: const EdgeInsets.only(top: 20.0),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20.0 * 3),
+              child: Column(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            Container(
-              height: size.height * 0.8,
-              width: size.width * 0.75,
+          ),
+          Center(
+            child: Container(
+              margin: const EdgeInsets.only(top: 20.0 * 3),
+              padding: EdgeInsets.all(20.0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(63),
-                  bottomLeft: Radius.circular(63),
-                ),
-                image: DecorationImage(
-                  alignment: Alignment.centerLeft,
-                  fit: BoxFit.cover,
-                  image: AssetImage(image),
-                ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Image.asset(image,
+                width: size.width * 0.5,
+                height: size.height * 0.5,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
