@@ -20,8 +20,6 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<int> get id => _sharedPreferenceHelper.getInt(UserConstant.columnId);
-  // Future<String> get email => _sharedPreferenceHelper.getString(UserConstant.columnEmail);
-  // Future<String> get imageProfile => _sharedPreferenceHelper.getString(UserConstant.columnImageProfile);
   Future<String> get username => _sharedPreferenceHelper.getString(UserConstant.columnUsername);
   UserModel get user => _user;
 
@@ -37,7 +35,6 @@ class UserProvider extends ChangeNotifier {
         res = await _updateCurrentUser({UserConstant.columnEmail: email});
 
       if (res == false) return res;
-      // res = await _sharedPreferenceHelper.setString(UserConstant.columnUsername, username);
       _user.email = email;
       _user.username = username;
 
@@ -50,7 +47,6 @@ class UserProvider extends ChangeNotifier {
   Future<bool> setImageProfile(String path) async {
     final res = await _updateCurrentUser({UserConstant.columnImageProfile: path});
     if (res == false) return res;
-    // res = await _sharedPreferenceHelper.setString(UserConstant.columnImageProfile, path);
     _user.imageProfile = path;
 
     notifyListeners();
@@ -123,9 +119,6 @@ class UserProvider extends ChangeNotifier {
       return false;
     if (user.email == email && true == await _verifyPassword(password, user.password)) {
       _sharedPreferenceHelper.setInt(UserConstant.columnId, user.id);
-      // _sharedPreferenceHelper.setString(UserConstant.columnEmail, user.email);
-      // _sharedPreferenceHelper.setString(UserConstant.columnUsername, user.username);
-      // _sharedPreferenceHelper.setString(UserConstant.columnImageProfile, user.imageProfile);
 
       notifyListeners();
       return true;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 import 'package:flutter_file_store/constants/product_constant.dart';
 
@@ -10,7 +11,7 @@ class ProductModel {
   String price;
   String description;
   String photo;
-  String tags;
+  List<String> tags;
   int sellerId;
   UserModel seller;
 
@@ -29,7 +30,7 @@ class ProductModel {
     price = map[ProductConstant.columnPrice];
     description = map[ProductConstant.columnDescription];
     photo = map[ProductConstant.columnPhoto];
-    tags = map[ProductConstant.columnTags];
+    tags = jsonDecode(map[ProductConstant.columnTags]).cast<String>();
     sellerId = map[ProductConstant.columnSeller];
   }
 
@@ -39,9 +40,14 @@ class ProductModel {
       ProductConstant.columnPrice: price,
       ProductConstant.columnDescription: description,
       ProductConstant.columnPhoto: photo,
-      ProductConstant.columnTags: tags,
+      ProductConstant.columnTags: jsonEncode(tags),
       ProductConstant.columnSeller: sellerId,
     };
     return map;
+  }
+
+  @override
+  String toString() {
+    return 'Product: {name: $name, price: $price, description: $description, photo: $photo, tags: $tags}';
   }
 }
