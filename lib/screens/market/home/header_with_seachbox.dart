@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../home.dart';
-
 class HeaderWithSearchBox extends StatelessWidget {
   const HeaderWithSearchBox({
     Key key,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../home.dart';
-
 class TitleWithMoreBtn extends StatelessWidget {
   const TitleWithMoreBtn({
     Key key,
