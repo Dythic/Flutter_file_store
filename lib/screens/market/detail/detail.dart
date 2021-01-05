@@ -16,7 +16,12 @@ class Detailscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(image: image, title: title, country: country, price: price),
+      body: Body(
+        image: image,
+        title: title,
+        country: country,
+        price: price,
+      ),
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_file_store/constants/Product.dart';
+
 import '../detail/detail.dart';
 
 class RecomendsPlants extends StatelessWidget {
@@ -13,57 +15,57 @@ class RecomendsPlants extends StatelessWidget {
       child: Row(
         children: <Widget>[
           RecomendPlantCard(
-            image: "assets/images/wireless headset.png",
-            title: "Headset",
-            country: "France",
-            price: 150,
+            image: products[8].image,
+            title: products[8].title,
+            country: products[8].country,
+            price: products[8].price,
             press: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Detailscreen(
-                    image: "assets/images/wireless headset.png",
-                    title: "Headset",
-                    country: "France",
-                    price: 150,
+                    image: products[8].image,
+                    title: products[8].title,
+                    country: products[8].country,
+                    price: products[8].price,
                   ),
                 ),
               );
             },
           ),
           RecomendPlantCard(
-            image: "assets/images/shoes2.png",
-            title: "Shoes",
-            country: "China",
-            price: 90,
+            image: products[9].image,
+            title: products[9].title,
+            country: products[9].country,
+            price: products[9].price,
             press: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Detailscreen(
-                    image: "assets/images/shoes2.png",
-                    title: "Shoes",
-                    country: "China",
-                    price: 90,
+                    image: products[9].image,
+                    title: products[9].title,
+                    country: products[9].country,
+                    price: products[9].price,
                   ),
                 ),
               );
             },
           ),
           RecomendPlantCard(
-            image: "assets/images/Image Popular Product 3.png",
-            title: "Helmet",
-            country: "Russia",
-            price: 25,
+            image: products[10].image,
+            title: products[10].title,
+            country: products[10].country,
+            price: products[10].price,
             press: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Detailscreen(
-                    image: "assets/images/Image Popular Product 3.png",
-                    title: "Helmet",
-                    country: "Russia",
-                    price: 25,
+                    image: products[10].image,
+                    title: products[10].title,
+                    country: products[10].country,
+                    price: products[10].price,
                   ),
                 ),
               );
