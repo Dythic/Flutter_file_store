@@ -8,7 +8,8 @@ import 'package:flutter_file_store/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(
+  runApp(
+    MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => ProductProvider()),

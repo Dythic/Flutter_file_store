@@ -113,11 +113,11 @@ class _LoginFormState extends State<LoginForm> {
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
-                          final userProvider = Provider.of<UserProvider>(context, listen: false);
+                          final userProvider =
+                              Provider.of<UserProvider>(context, listen: false);
                           final res = await userProvider.login(email, password);
                           print("login: $res");
-                          if (res == true)
-                            Navigator.pop(context);
+                          if (res == true) Navigator.pop(context);
                         }
                       },
                       child: Text(
