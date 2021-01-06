@@ -14,6 +14,27 @@ class Product {
     this.color,
     this.country,
   });
+
+  Product.fromJson(Map<String, dynamic> json)
+    : id = json['id'],
+      image = json['image'],
+      title = json['title'],
+      price = json['price'],
+      description = json['description'],
+      size = json['size'],
+      color = Color(0xFFFFFFFF),
+      country = json['country'];
+  
+  Map<String, dynamic> toJson() =>
+  {
+    'id': id,
+    'image': image,
+    'title': title,
+    'price': price,
+    'description': description,
+    'size': size,
+    'country': country,
+  };
 }
 
 List<Product> products = [

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_file_store/constants/Product.dart';
 
-import '../detail/detail.dart';
+import 'package:flutter_file_store/screens/market/detail/detail.dart';
 
 class RecomendsPlants extends StatelessWidget {
   const RecomendsPlants({
@@ -24,10 +24,7 @@ class RecomendsPlants extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => Detailscreen(
-                    image: products[0].image,
-                    title: products[0].title,
-                    country: products[0].country,
-                    price: products[0].price,
+                    product: products[0],
                   ),
                 ),
               );
@@ -43,10 +40,7 @@ class RecomendsPlants extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => Detailscreen(
-                    image: products[2].image,
-                    title: products[2].title,
-                    country: products[2].country,
-                    price: products[2].price,
+                    product: products[2],
                   ),
                 ),
               );
@@ -62,10 +56,7 @@ class RecomendsPlants extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => Detailscreen(
-                    image: products[3].image,
-                    title: products[3].title,
-                    country: products[3].country,
-                    price: products[3].price,
+                    product: products[3],
                   ),
                 ),
               );

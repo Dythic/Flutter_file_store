@@ -8,12 +8,14 @@ class UserModel {
   String password;
   String username;
   String imageProfile;
+  List<String> cart = [];
 
   UserModel({
     @required this.email,
     @required this.password,
     @required this.username,
-    @required this.imageProfile
+    @required this.imageProfile,
+    this.cart
   });
   UserModel.empty();
 

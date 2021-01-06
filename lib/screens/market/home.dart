@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'home/header_with_seachbox.dart';
-import 'home/featurred_plants.dart';
-import 'home/title_with_more_bbtn.dart';
-import 'home/recomend_plants.dart';
-import 'home/banner.dart';
+import 'package:flutter_file_store/screens/market/home/header_with_seachbox.dart';
+import 'package:flutter_file_store/screens/market/home/featurred_plants.dart';
+import 'package:flutter_file_store/screens/market/home/title_with_more_bbtn.dart';
+import 'package:flutter_file_store/screens/market/home/recomend_plants.dart';
+import 'package:flutter_file_store/screens/market/home/banner.dart';
 
 class HomePage extends StatelessWidget {
   @override

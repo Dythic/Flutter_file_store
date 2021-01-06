@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_file_store/constants/Product.dart';
 
 class ItemCard extends StatelessWidget {
@@ -24,8 +25,6 @@ class ItemCard extends StatelessWidget {
                 color: product.color,
                 borderRadius: BorderRadius.circular(16),
               ),
-              /*child: Hero(
-                tag: "${product.id}",*/
               child: Image.asset(product.image),
             ),
           ),

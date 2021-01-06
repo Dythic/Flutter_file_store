@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_file_store/constants/Product.dart';
-import 'package:flutter_file_store/screens/market/detail/detail.dart';
 
-import 'buy/item_card.dart';
-import 'detail/detail.dart';
+import 'package:flutter_file_store/screens/market/buy/item_card.dart';
+import 'package:flutter_file_store/screens/market/detail/detail.dart';
 
 class BuyPage extends StatelessWidget {
   final Product product;
@@ -45,10 +44,7 @@ class BuyPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => Detailscreen(
-                        image: products[index].image,
-                        title: products[index].title,
-                        country: "France",
-                        price: products[index].price,
+                        product: products[index],
                       ),
                     ),
                   );

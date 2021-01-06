@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter_file_store/constants/Product.dart';
+
 import 'package:flutter_file_store/screens/market/detail/body.dart';
 
 class Detailscreen extends StatelessWidget {
   const Detailscreen({
     Key key,
-    this.image,
-    this.title,
-    this.country,
-    this.price,
+    this.product,
   }) : super(key: key);
 
-  final String image, title, country;
-  final int price;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Body(
-        image: image,
-        title: title,
-        country: country,
-        price: price,
+        product: product,
       ),
     );
   }

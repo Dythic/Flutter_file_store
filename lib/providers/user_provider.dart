@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_file_store/helpers/database_helper.dart';
 import 'package:flutter_file_store/helpers/shared_preference_helper.dart';
 import 'package:flutter_file_store/models/user_model.dart';
+import 'package:flutter_file_store/constants/Product.dart';
 import 'package:flutter_file_store/constants/user_constant.dart';
 
 import 'package:flutter_bcrypt/flutter_bcrypt.dart';
@@ -112,6 +114,56 @@ class UserProvider extends ChangeNotifier {
     });
   }
 
+  Future<bool> addToCart(Product product) async {
+    bool inside = false;
+
+    for (var i = 0; i < _user.cart.length; i++) {
+      final newElement = jsonDecode(_user.cart[i]);
+
+      if (newElement['product']['id'] == product.id) {
+        newElement['count'] += 1;
+        _user.cart[i] = jsonEncode(newElement);
+        inside = true;
+      }
+    }
+
+    if (!inside)
+      _user.cart.add(jsonEncode({'count': 1, 'product': product.toJson()}));
+
+    bool res = await _sharedPreferenceHelper.setStringList('cart', _user.cart);
+
+    return res;
+  }
+
+  Future<bool> removeFromCart(int id) async {
+    _user.cart.removeWhere((element) {
+      return jsonDecode(element)['product']['id'] == id;
+    });
+    bool res = await _sharedPreferenceHelper.setStringList('cart', _user.cart);
+
+    notifyListeners();
+    return res;
+  }
+
+  int getTotalFromCart() {
+    int total = 0;
+
+    _user.cart.forEach((element) {
+      final json = jsonDecode(element);
+      total += json['product']['price'] * json['count'];
+    });
+    return total;
+  }
+
+  int getCountInCart() {
+    int count = 0;
+
+    _user.cart.forEach((element) {
+      count += jsonDecode(element)['count'];
+    });
+    return count;
+  }
+
   Future<bool> login(String email, String password) async {
     UserModel user = await _getUserByEmail(email);
 
@@ -147,6 +199,7 @@ class UserProvider extends ChangeNotifier {
     final id = await this.id;
     if (id == -1) return false;
     _user = await _getUserById(id);
+    _user.cart = await _sharedPreferenceHelper.getStringList('cart');
     return true;
   }
 }

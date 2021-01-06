@@ -1,20 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'cart/body.dart';
-import 'cart/default_button.dart';
+import 'package:flutter_file_store/providers/user_provider.dart';
+
+import 'package:flutter_file_store/screens/market/cart/body.dart';
+import 'package:flutter_file_store/screens/market/cart/default_button.dart';
 
 class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(context),
-      body: Body(),
-      bottomNavigationBar: CheckOurCard(),
+    final userProvider = Provider.of<UserProvider>(context);
+
+    return FutureBuilder(
+      future: userProvider.isLogged(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting)
+          return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                "Your Cart",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            body: Center(child: CircularProgressIndicator())
+          );
+        else if (snapshot.hasData) {
+          if (snapshot.data != false) {
+            return Scaffold(
+              appBar: buildAppBar(context, userProvider.getCountInCart()),
+              body: Body(),
+              bottomNavigationBar: CheckOurCard(),
+            );
+          } else {
+            return Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: Text(
+                  "Your Cart",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              body: Center(
+                child: Text('Login to access the cart !', style: TextStyle(fontSize: 20))
+              ),
+            );
+          }
+        } else if (snapshot.hasError)
+          return Text("ERROR: ${snapshot.error}");
+        else
+          return Text('');
+      },
     );
   }
 
-  AppBar buildAppBar(BuildContext context) {
+  AppBar buildAppBar(BuildContext context, int itemNbr) {
     return AppBar(
       centerTitle: true,
       title: Column(
@@ -24,7 +65,7 @@ class CartPage extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
           Text(
-            "4 items",
+            "$itemNbr items",
             style: Theme.of(context).textTheme.caption,
           )
         ],
@@ -97,7 +138,7 @@ class CheckOurCard extends StatelessWidget {
                     style: TextStyle(color: Colors.grey),
                     children: [
                       TextSpan(
-                        text: "\$2419",
+                        text: "\$${context.watch<UserProvider>().getTotalFromCart().toString()}",
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],

@@ -19,6 +19,18 @@ class SharedPreferenceHelper {
     });
   }
 
+  Future<List<String>> getStringList(String title) {
+    return _sharedPreference.then((prefs) {
+      return prefs.getStringList(title) ?? [];
+    });
+  }
+
+  Future<bool> setStringList(String title, List<String> value) {
+    return _sharedPreference.then((prefs) {
+      return prefs.setStringList(title, value);
+    });
+  }
+
   Future<int> getInt(String title) {
     return _sharedPreference.then((prefs) {
       return prefs.getInt(title) ?? -1;

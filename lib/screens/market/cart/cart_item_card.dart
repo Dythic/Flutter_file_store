@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_file_store/constants/Product.dart';
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({
     Key key,
     @required this.products,
+    @required this.count,
   }) : super(key: key);
 
   final Product products;
+  final int count;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class CartItemCard extends StatelessWidget {
                 style: TextStyle(color: Colors.grey),
                 children: [
                   TextSpan(
-                    text: " x1",
+                    text: " x$count",
                     style: TextStyle(color: Colors.orange),
                   ),
                 ],
