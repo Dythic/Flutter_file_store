@@ -20,7 +20,7 @@ class BuyPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
-            "Product",
+            "\nProduct\n",
             style: Theme.of(context)
                 .textTheme
                 .headline5

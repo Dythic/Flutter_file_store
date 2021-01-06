@@ -15,14 +15,14 @@ class BannerCard extends StatelessWidget {
         vertical: 15,
       ),
       decoration: BoxDecoration(
-        color: Color(0xFF4A3298),
+        color: Colors.orange,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text.rich(
         TextSpan(
           style: TextStyle(color: Colors.white),
           children: [
-            TextSpan(text: "A Summer Surpise\n"),
+            TextSpan(text: "A Winter Surpise\n"),
             TextSpan(
               text: "Cashback 20%",
               style: TextStyle(

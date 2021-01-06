@@ -43,7 +43,7 @@ class CartItemCard extends StatelessWidget {
                 style: TextStyle(color: Colors.grey),
                 children: [
                   TextSpan(
-                    text: " x2",
+                    text: " x1",
                     style: TextStyle(color: Colors.orange),
                   ),
                 ],
