@@ -3,7 +3,6 @@ import 'package:flutter_file_store/routes.dart';
 import 'package:flutter_file_store/constants/routes_constant.dart';
 
 import 'package:flutter_file_store/providers/picker_provider.dart';
-import 'package:flutter_file_store/providers/product_provider.dart';
 import 'package:flutter_file_store/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +11,6 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
-        ChangeNotifierProvider(create: (context) => ProductProvider()),
         Provider(create: (context) => PickerProvider())
       ],
       child: MyApp(),

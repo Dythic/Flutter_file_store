@@ -3,7 +3,6 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'package:flutter_file_store/constants/product_constant.dart';
 import 'package:flutter_file_store/constants/user_constant.dart';
 
 class DatabaseHelper {
@@ -38,18 +37,6 @@ class DatabaseHelper {
         ${UserConstant.columnPassword} TEXT NOT NULL,
         ${UserConstant.columnUsername} TEXT NOT NULL,
         ${UserConstant.columnImageProfile} TEXT
-      )
-      ''');
-    await db.execute('''
-      CREATE TABLE ${ProductConstant.tableProducts} (
-        ${ProductConstant.columnId} INTEGER PRIMARY KEY AUTOINCREMENT,
-        ${ProductConstant.columnName} TEXT NOT NULL,
-        ${ProductConstant.columnPrice} TEXT NOT NULL,
-        ${ProductConstant.columnDescription} TEXT,
-        ${ProductConstant.columnPhoto} TEXT,
-        ${ProductConstant.columnTags} TEXT,
-        ${ProductConstant.columnSeller} INTEGER NOT NULL,
-        FOREIGN KEY (${ProductConstant.columnSeller}) REFERENCES ${UserConstant.tableUsers} (${UserConstant.columnId}) ON DELETE NO ACTION ON UPDATE NO ACTION
       )
       ''');
   }
