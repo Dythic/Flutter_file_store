@@ -28,7 +28,7 @@ List<Product> products = [
       color: Color(0xFFFFFFFF)),
   Product(
       id: 1,
-      title: "Laptop",
+      title: "MacBook Pro 2016",
       price: 234,
       size: 8,
       country: "France",
