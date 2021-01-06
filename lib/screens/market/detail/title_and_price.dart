@@ -29,7 +29,7 @@ class TitleAndPrice extends StatelessWidget {
                   text: country,
                   style: TextStyle(
                     fontSize: 20,
-                    color: Colors.black,
+                    color: Colors.grey,
                     fontWeight: FontWeight.w300,
                   ),
                 ),
@@ -42,7 +42,7 @@ class TitleAndPrice extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .headline5
-                .copyWith(color: Colors.black),
+                .copyWith(color: Colors.orange),
           )
         ],
       ),

@@ -15,57 +15,57 @@ class RecomendsPlants extends StatelessWidget {
       child: Row(
         children: <Widget>[
           RecomendPlantCard(
-            image: products[8].image,
-            title: products[8].title,
-            country: products[8].country,
-            price: products[8].price,
+            image: products[0].image,
+            title: products[0].title,
+            country: products[0].country,
+            price: products[0].price,
             press: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Detailscreen(
-                    image: products[8].image,
-                    title: products[8].title,
-                    country: products[8].country,
-                    price: products[8].price,
+                    image: products[0].image,
+                    title: products[0].title,
+                    country: products[0].country,
+                    price: products[0].price,
                   ),
                 ),
               );
             },
           ),
           RecomendPlantCard(
-            image: products[9].image,
-            title: products[9].title,
-            country: products[9].country,
-            price: products[9].price,
+            image: products[2].image,
+            title: products[2].title,
+            country: products[2].country,
+            price: products[2].price,
             press: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Detailscreen(
-                    image: products[9].image,
-                    title: products[9].title,
-                    country: products[9].country,
-                    price: products[9].price,
+                    image: products[2].image,
+                    title: products[2].title,
+                    country: products[2].country,
+                    price: products[2].price,
                   ),
                 ),
               );
             },
           ),
           RecomendPlantCard(
-            image: products[10].image,
-            title: products[10].title,
-            country: products[10].country,
-            price: products[10].price,
+            image: products[3].image,
+            title: products[3].title,
+            country: products[3].country,
+            price: products[3].price,
             press: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Detailscreen(
-                    image: products[10].image,
-                    title: products[10].title,
-                    country: products[10].country,
-                    price: products[10].price,
+                    image: products[3].image,
+                    title: products[3].title,
+                    country: products[3].country,
+                    price: products[3].price,
                   ),
                 ),
               );
@@ -114,13 +114,6 @@ class RecomendPlantCard extends StatelessWidget {
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 10),
-                    blurRadius: 50,
-                    color: Colors.white.withOpacity(0.23),
-                  ),
-                ],
               ),
               child: Row(
                 children: <Widget>[

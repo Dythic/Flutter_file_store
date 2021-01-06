@@ -35,7 +35,7 @@ class Body extends StatelessWidget {
                       topRight: Radius.circular(20),
                     ),
                   ),
-                  color: Colors.black,
+                  color: Colors.orange,
                   onPressed: () {},
                   child: Text(
                     "Buy Now",
